@@ -1,0 +1,25 @@
+package biblioteca;
+
+public class Libro {
+	
+	private String titolo;
+	private Utente utente;          //uso la classe utente per assegnare il libro
+	
+	
+	public Libro(String tit) {
+		titolo=tit;
+		utente=null;               // non c'è ancora alcun utente assegnato
+	}
+	
+	public String getTitolo() {
+		return titolo;
+	}
+	public Utente getUtente() {
+		return utente;
+	}
+	
+	public void setUtente(Utente xUtente) {         //per assegnare l'utente al libro
+		utente=xUtente;
+	}
+
+}

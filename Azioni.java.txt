@@ -1,0 +1,83 @@
+package biblioteca;
+
+import java.util.ArrayList;
+
+
+
+public class Azioni {
+	
+	private ArrayList<Utente> utenti;
+	private ArrayList<Libro> libri;
+	
+	public Azioni() {                                                            //serve poi nel main
+		utenti= new ArrayList<Utente>();
+		libri = new ArrayList<Libro>();
+	}
+	
+	private int trovaLibro(String unTitolo) {                                   
+	    for(int i = 0; i < libri.size(); i++)
+	       if(libri.get(i).getTitolo().equalsIgnoreCase(unTitolo))
+	          return i;
+	       return -1;
+	 }	
+	
+	public void nuovoLibro(String xTitolo) {
+		if(trovaLibro(xTitolo) != -1)
+			return;
+		Libro l= new Libro(xTitolo);
+		libri.add(l);
+	}
+	
+	private int trovaUtente(String xNome, String xCognome) {
+		for(int i=0; i<utenti.size();i++) 
+			if (utenti.get(i).getNome().equalsIgnoreCase(xNome) && utenti.get(i).getCognome().equalsIgnoreCase(xCognome))
+				return i;
+		return -1;	
+		
+	}
+	
+	public void nuovoUtente(String xNome, String xCognome) {
+		if (trovaUtente(xNome, xCognome) != -1)
+			return;
+		Utente U= new Utente(xNome, xCognome);
+		utenti.add(U);
+	}
+	
+	public int presta(String xTitolo, String xNome, String xCognome) {
+		int t=trovaLibro(xTitolo);
+		if ((t==-1) || (libri.get(t).getUtente() != null))
+			return -1;
+		
+		int r=trovaUtente(xNome, xCognome);
+		if (r==-1)
+			return -1;
+		
+		libri.get(t).setUtente(utenti.get(r));
+		return 0;					
+	}
+	
+	public int numLibri(String xNome, String xCognome) {                         //per i libri presi
+		int nLib=0;
+		for (Libro a: libri)
+			 if (a.getUtente() != null && a.getUtente().getNome().equalsIgnoreCase(xNome) &&
+			 a.getUtente().getCognome().equalsIgnoreCase(xCognome))
+			 nLib = nLib + 1;
+			 return nLib;
+	}
+	
+	public String getListaLib() {
+		String a="";
+		for (Libro lib : libri)
+			 a= a+ lib.getTitolo()+ "\n";
+		return a;
+	}
+	
+	public String getListaUt() {
+		String a="";
+		for (Utente ut : utenti)
+			a= a +ut.getNome()+ " "+ ut.getCognome()+ "\n";
+		return a;
+	}
+	
+
+}
